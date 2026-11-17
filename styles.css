@@ -449,6 +449,14 @@ h3 {
   transform: scale(1.025);
 }
 
+.gallery-slider {
+  position: relative;
+}
+
+.gallery-arrow {
+  display: none;
+}
+
 .grill-section {
   background: var(--wine-dark);
   color: var(--cream);
@@ -707,29 +715,76 @@ h3 {
 
 .floating-actions {
   position: fixed;
-  right: 22px;
-  bottom: 22px;
-  z-index: 40;
+  right: 24px;
+  bottom: 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  z-index: 1000;
 }
-.floating-actions a {
+
+.floating-social {
   width: 52px;
   height: 52px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  color: white;
-  font-size: 0.78rem;
-  font-weight: 900;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  background: transparent;
+  border: 2px solid #6b2d32;
+  color: #6b2d32;
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
 }
-.floating-instagram {
-  background: #833ab4;
+
+.floating-social svg {
+  width: 25px;
+  height: 25px;
+
+  fill: currentColor;
+}
+
+.floating-social:hover {
+  transform: translateY(-3px);
+  background-color: #a34d2a;
+  color: #f4ead0;
+  border-color: #a34d2a;
 }
 .floating-whatsapp {
-  background: #1f8f55;
+  color: #287548;
+  border-color: #287548;
+}
+
+.floating-whatsapp:hover {
+  background-color: #287548;
+  color: #fff;
+  border-color: #287548;
+}
+
+.floating-instagram {
+  color: #a34d2a;
+}
+
+@media (max-width: 768px) {
+  .floating-actions {
+    right: 16px;
+    bottom: 16px;
+    gap: 10px;
+  }
+
+  .floating-social {
+    width: 48px;
+    height: 48px;
+  }
+
+  .floating-social svg {
+    width: 23px;
+    height: 23px;
+  }
 }
 
 .modal {
@@ -935,15 +990,70 @@ body.modal-open {
   .lunch-card {
     min-height: auto;
   }
+  .gallery-slider {
+    position: relative;
+    width: 100%;
+  }
   .gallery-row {
     display: flex;
+    grid-template-columns: none;
+    width: 100%;
+    gap: 14px;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    padding-bottom: 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    padding: 4px 42px 16px 4px;
+    scrollbar-width: none;
+  }
+  .gallery-row::-webkit-scrollbar {
+    display: none;
   }
   .gallery-card {
-    min-width: 78%;
-    scroll-snap-align: start;
+    flex: 0 0 82%;
+    min-width: 82%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+  .gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .gallery-arrow {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    z-index: 20;
+    border: 1px solid var(--wine);
+    border-radius: 50%;
+    background: rgba(255, 253, 248, 0.95);
+    color: var(--wine);
+    font-size: 30px;
+    font-family: Arial, sans-serif;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+  }
+  .gallery-arrow-prev {
+    left: 8px;
+  }
+  .gallery-arrow-next {
+    right: 8px;
+  }
+  .gallery-arrow:active {
+    transform: translateY(-50%) scale(0.92);
   }
   .price-pills {
     display: grid;

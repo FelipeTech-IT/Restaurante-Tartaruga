@@ -59,3 +59,36 @@ window.addEventListener(
   },
   { passive: true },
 );
+
+const lunchGallery = document.querySelector("#lunchGallery");
+
+const prevGalleryButton = document.querySelector(".gallery-arrow-prev");
+
+const nextGalleryButton = document.querySelector(".gallery-arrow-next");
+
+function getGalleryScrollAmount() {
+  const card = lunchGallery?.querySelector(".gallery-card");
+
+  if (!card) {
+    return 300;
+  }
+
+  const styles = window.getComputedStyle(lunchGallery);
+  const gap = parseFloat(styles.gap) || 0;
+
+  return card.offsetWidth + gap;
+}
+
+nextGalleryButton?.addEventListener("click", () => {
+  lunchGallery.scrollBy({
+    left: getGalleryScrollAmount(),
+    behavior: "smooth",
+  });
+});
+
+prevGalleryButton?.addEventListener("click", () => {
+  lunchGallery.scrollBy({
+    left: -getGalleryScrollAmount(),
+    behavior: "smooth",
+  });
+});
